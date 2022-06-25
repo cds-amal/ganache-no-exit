@@ -1,0 +1,22 @@
+{
+  "name": "ss",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^10.0.0"
+  },
+  "dependencies": {
+    "@truffle/contract": "^4.5.14",
+    "ganache": "^7.3.2"
+  }
+}
