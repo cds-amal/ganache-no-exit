@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@truffle/contract": "^4.5.14",
-    "ganache": "^7.3.2"
+    "ganache": "^7.3.2",
+    "wtfnode": "^0.9.1"
   }
 }

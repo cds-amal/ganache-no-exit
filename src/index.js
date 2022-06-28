@@ -1,4 +1,5 @@
-const contract = require("@truffle/contract");
+const wtf = require("wtfnode");
+const Contract = require("@truffle/contract");
 const Ganache = require("ganache");
 
 function getProvider() {
@@ -18,24 +19,18 @@ function getProvider() {
 // First address generated from the above mnemonic
 const fromAddress = "0x627306090abaB3A6e1400e9345bC60c78a8BEf57";
 
-class Simple {
-  constructor(provider) {
-    this.provider = provider;
-    this.artifact = require("./SimpleStorage.json");
-    this.contract = contract(this.artifact);
-    this.contract.setProvider(provider);
-  }
-}
-
 async function test() {
   const provider = getProvider();
-  const s = new Simple(provider);
   console.log('provider created');
 
-  const ss = await s.contract.new({from: fromAddress});
-  console.log(`new contract deployed: ${ss.address}`);
+  const artifact = require("./SimpleStorage.json");;
+  const contract = Contract(artifact);
+  contract.setProvider(provider);
+  
+  const deployed = await contract.new({from: fromAddress});
+  console.log(`new contract deployed: ${deployed.address}`);
 
-  const value = (await ss.data()).toString();
+  const value = (await deployed.data()).toString();
   console.log(`Read value from deployed contract: ${value}`);
 
   console.log('DISCONNECT Provider ...');
@@ -46,4 +41,6 @@ async function test() {
 }
 
 
-test();
+test().then(() => {
+  wtf.dump();
+});
