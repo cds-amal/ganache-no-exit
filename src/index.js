@@ -1,4 +1,3 @@
-const wtf = require("wtfnode");
 const Contract = require("@truffle/contract");
 const Ganache = require("ganache");
 
@@ -30,17 +29,18 @@ async function test() {
   const deployed = await contract.new({from: fromAddress});
   console.log(`new contract deployed: ${deployed.address}`);
 
-  const value = (await deployed.data()).toString();
-  console.log(`Read value from deployed contract: ${value}`);
-
-  console.log('DISCONNECT Provider ...');
-  await provider.disconnect();
-  console.log('...returned from `await provider.disconnect()`');
-
-  setInterval(() => console.log('Does this process exit? (try commenting out the `provider.disconnect()` call on next run)'), 3000).unref();
+  async function mine() {
+    await provider.send("evm_mine");
+    const number = await provider.send("eth_blockNumber");
+    console.log({number});
+    if (number == 25) {{
+      // wait another second just to be for sure
+      setTimeout(() => provider.disconnect(), 1000);
+    }}
+    setTimeout(mine, 100);
+  }
+  mine();
 }
 
 
-test().then(() => {
-  wtf.dump();
-});
+test();
